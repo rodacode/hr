@@ -1,36 +1,58 @@
+import { useEffect, useState } from 'react'
 import EmployeesList from '../components/EmployeesList'
+import {collection, query, orderBy, onSnapshot} from "firebase/firestore"
+import {db} from '../firebase'
+import {
+    Box,
+    Button,
+    Input,
+    Text,
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalHeader,
+    ModalFooter,
+    ModalBody,
+    ModalCloseButton,
+    useDisclosure
+} from '@chakra-ui/react'
+import AddEmployeeForm from '../components/AddEmployeeForm'
 
+const Home = () => {
+    const { isOpen, onOpen, onClose } = useDisclosure()
+    const [employees, setEmployees] = useState<any>()
 
-const Home = ( )=> {
+    useEffect(() => {
+        try {
+            const employeesColRef = query(collection(db, 'employees'), orderBy('created', 'desc'))
+            onSnapshot( employeesColRef, (snapshot) => {
+                setEmployees(snapshot.docs.map(doc => ({
+                id: doc.id,
+                data: doc.data()
+              })))
+            })
 
-    const employees = [
-        {
-            id: 0,
-            name: "Johnn Perk",
-            status: "added"
-        },
-        {
-            id: 1,
-            name: "Teresa Piol",
-            status: "active"
-        },
-        {
-            id: 2,
-            name: "Manu Poir",
-            status: "inactive"
-        },
-        {
-            id: 3,
-            name: "Ana Eerols",
-            status: "approved"
-        }
-    ]
+          } catch (err) {
+            console.log(err);
+          }
+    }, []);
 
     return (
-        <div className='home__container'>
-            <h3>HR APP</h3>
-            <EmployeesList employees={employees}/>
-        </div>
+        <Box p={2} className='home__container'>
+            <h1 className='home__title'>HR APP</h1>
+            <Button onClick={onOpen}>Add employee</Button>
+            <EmployeesList employees={employees} />
+            <Modal isOpen={isOpen} onClose={onClose}>
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalHeader>Add Employee</ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody>
+                        <AddEmployeeForm onClose={onClose}/>
+                    </ModalBody>
+                </ModalContent>
+            </Modal>
+        </Box>
     )
 
 

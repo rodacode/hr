@@ -16,12 +16,18 @@ body {
     margin: 20px auto;
 }
 
+.home__title {
+    margin: 20px auto;
+    font-size: 40px;
+    font-weight: bold;
+}
+
 .employeesList__container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-width: 100%;
+    min-width: 90%;
     margin: 20px auto;
 }
 
@@ -167,4 +173,20 @@ body {
     text-align: center;
     margin-left: 40px;
     text-transform: capitalize;
+}
+
+@media (max-width: 480px) {
+    .step,
+    .step1 {
+        width: 70px;
+    }
+    .step__text {
+        margin-left: 25px;
+    }
+    .step:before {
+        right: -23px;
+    }
+    .step1:before {
+        right: -23px;
+    }
 }

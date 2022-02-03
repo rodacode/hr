@@ -8,7 +8,7 @@ const EmployeesList = ({ employees } : {employees:any}) => {
             {
                 employees && employees.map((employee:any) => {
                     return (
-                        <EmployeesListItem employee={employee}/>
+                        <EmployeesListItem key={employee.id} employee={employee}/>
                     )
                 })
             }
