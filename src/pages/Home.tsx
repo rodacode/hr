@@ -5,13 +5,10 @@ import {db} from '../firebase'
 import {
     Box,
     Button,
-    Input,
-    Text,
     Modal,
     ModalOverlay,
     ModalContent,
     ModalHeader,
-    ModalFooter,
     ModalBody,
     ModalCloseButton,
     useDisclosure
